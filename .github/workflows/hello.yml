@@ -1,0 +1,39 @@
+# The name displayed in the GitHub Actions tab.
+name: Hello World with Python
+
+# Events that start this workflow.
+on:
+  # Run automatically when code is pushed to the main branch.
+  push:
+    branches:
+      - main
+
+  # Allow the workflow to be started manually from the Actions tab.
+  workflow_dispatch:
+
+# A workflow is made of one or more jobs.
+jobs:
+  # This job runs the Python Hello World program.
+  hello-python:
+    name: Run the Python Hello World program
+
+    # The type of virtual machine (runner) the job runs on.
+    runs-on: ubuntu-latest
+
+    # A job is made of one or more steps that run in order.
+    steps:
+      # Download the repository files onto the runner.
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      # Install Python on the runner.
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # Run the program, passing the name through an environment variable.
+      - name: Run the Python program
+        env:
+          WHO_TO_GREET: 'GitHub Actions Student'
+        run: python hello.py
